@@ -4,7 +4,7 @@ Este projeto é uma implementação do clássico **Campo Minado**, desenvolvido 
 
 ---
 
-## ⚙️ Requisitos
+## ⚙️ Requisitos Mac
 
 - macOS  
 - [Homebrew](https://brew.sh/)  
@@ -50,7 +50,7 @@ Este projeto é uma implementação do clássico Campo Minado, desenvolvido em C
 
 ---
 
-### 🛠️ Requisitos
+## 🛠️ Requisitos Linux
 
 * Linux Ubuntu
 * Compilador GCC
