@@ -42,8 +42,8 @@ bool IsGameOver(Board *board);
 void AddMine(MineList *list, int x, int y);
 void FreeMineList(MineList *list);
 
-// Saving and loading
+// Saving and loading (se implementado)
 void SaveBoard(Board *board, const char *filename);
 Board* LoadBoard(const char *filename);
 
-#endif
+#endif // GAME_H

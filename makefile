@@ -14,7 +14,8 @@ TARGET = campo_minado
 SRCDIR = src
 OBJDIR = obj
 
-SRCS = $(wildcard $(SRCDIR)/*.c)
+# Pega todos os arquivos .c na pasta src
+SRCS = $(wildcard $(SRCDIR)/*.c)  
 OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 .PHONY: all clean

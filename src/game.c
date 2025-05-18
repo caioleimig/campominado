@@ -1,5 +1,7 @@
-#include "game.h"
+#include "raylib.h"
+#include "../include/game.h"
 #include <stdlib.h>
+#include <time.h>
 
 Board* CreateBoard(int gridSize, int numMines) {
     Board *board = (Board *)malloc(sizeof(Board));
@@ -19,9 +21,43 @@ Board* CreateBoard(int gridSize, int numMines) {
     return board;
 }
 
+void PlaceMines(Board *board) {
+    srand(time(NULL));
+    int placedMines = 0;
+    while (placedMines < board->numMines) {
+        int x = rand() % board->gridSize;
+        int y = rand() % board->gridSize;
+
+        if (!board->cells[y][x].hasMine) {
+            board->cells[y][x].hasMine = true;
+            AddMine(&board->mines, x, y);
+            placedMines++;
+        }
+    }
+}
+
+void CalculateAdjacentMines(Board *board) {
+    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    for (int y = 0; y < board->gridSize; y++) {
+        for (int x = 0; x < board->gridSize; x++) {
+            if (board->cells[y][x].hasMine) continue;
+
+            int count = 0;
+            for (int i = 0; i < 8; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (nx >= 0 && nx < board->gridSize && ny >= 0 && ny < board->gridSize && board->cells[ny][nx].hasMine) {
+                    count++;
+                }
+            }
+            board->cells[y][x].adjacentMines = count;
+        }
+    }
+}
+
 void InitGame(Board *board) {
-    // Aqui você pode inicializar minas e preparar o jogo
-    // Exemplo simples: limpar células e resetar flags
     for (int i = 0; i < board->gridSize; i++) {
         for (int j = 0; j < board->gridSize; j++) {
             board->cells[i][j].revealed = false;
@@ -32,18 +68,30 @@ void InitGame(Board *board) {
     }
     board->gameOver = false;
 
-    // TODO: adicionar minas e calcular adjacentes
+    PlaceMines(board);
+    CalculateAdjacentMines(board);
 }
 
 void UpdateGame(Board *board) {
-    // Atualize o estado do jogo (input, lógica)
-    // Exemplo: verificar se jogo acabou etc.
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        Vector2 mousePos = GetMousePosition();
+        int cellSize = 20;
+        int x = (int)(mousePos.x - 10) / cellSize;
+        int y = (int)(mousePos.y - 40) / cellSize;
+
+        if (x >= 0 && x < board->gridSize && y >= 0 && y < board->gridSize) {
+            board->cells[y][x].revealed = true;
+
+            if (board->cells[y][x].hasMine) {
+                board->gameOver = true;
+            }
+        }
+    }
 }
 
 void DrawGame(Board *board) {
     DrawText("Campo Minado", 10, 10, 20, DARKGRAY);
 
-    // Exemplo simples: desenhar células como quadrados
     int cellSize = 20;
     for (int y = 0; y < board->gridSize; y++) {
         for (int x = 0; x < board->gridSize; x++) {
@@ -62,31 +110,16 @@ void DrawGame(Board *board) {
     }
 }
 
-bool IsGameOver(Board *board) {
-    return board->gameOver;
-}
-
-void DestroyBoard(Board *board) {
-    for (int i = 0; i < board->gridSize; i++) {
-        free(board->cells[i]);
-    }
-    free(board->cells);
-
-    // Liberar lista de minas
-    FreeMineList(&board->mines);
-
-    free(board);
-}
-
-// Funções para manipular MineList
+// Função para adicionar uma mina na lista encadeada
 void AddMine(MineList *list, int x, int y) {
-    MineNode *newNode = (MineNode *)malloc(sizeof(MineNode));
+    MineNode *newNode = malloc(sizeof(MineNode));
     newNode->x = x;
     newNode->y = y;
     newNode->next = list->head;
     list->head = newNode;
 }
 
+// Função para liberar a lista de minas
 void FreeMineList(MineList *list) {
     MineNode *current = list->head;
     while (current) {
@@ -97,4 +130,14 @@ void FreeMineList(MineList *list) {
     list->head = NULL;
 }
 
-// Aqui você pode implementar SaveBoard e LoadBoard se quiser
+// Função para destruir o tabuleiro e liberar memória
+void DestroyBoard(Board *board) {
+    for (int i = 0; i < board->gridSize; i++) {
+        free(board->cells[i]);
+    }
+    free(board->cells);
+    FreeMineList(&board->mines);
+    free(board);
+}
+
+
