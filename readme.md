@@ -22,10 +22,10 @@ Abra o terminal e execute:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-2. **Instalar a raylib:**
+### 2. Instalar a raylib:
 ```bash
 brew install raylib
 
-3. **Verificar se a Raylib foi instalada corretamente:**
+### 3. Verificar se a Raylib foi instalada corretamente:
 ```bash
 pkg-config --cflags --libs raylib
