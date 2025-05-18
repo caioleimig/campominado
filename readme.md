@@ -21,20 +21,11 @@ Abra o terminal e execute:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-2. Instalar o Raylib
+
+2. **Instalar a raylib:**
+```bash
 brew install raylib
-3. Verificar se o Raylib foi instalado corretamente
+
+3. **Verificar se a Raylib foi instalada corretamente:**
+```bash
 pkg-config --cflags --libs raylib
-🛠️ Compilando o projeto
-
-Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo da seguinte forma:
-
-1. Navegue até a raiz do projeto (onde está a pasta src/):
-cd /caminho/para/o/projeto
-2. Compile com o comando:
-gcc src/*.c -Iinclude -o campominado -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
-▶️ Executando o jogo
-
-Se a compilação for bem-sucedida, execute o jogo com:
-
-./campominado
