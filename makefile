@@ -1,10 +1,13 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+LDFLAGS =
 
 # Verificação do sistema operacional
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)  # macOS
+    CFLAGS += -I/opt/homebrew/include
+    LDFLAGS += -L/opt/homebrew/lib
     RAYLIB_LIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
 else  # Linux
     RAYLIB_LIBS = -lraylib -lGL -lpthread -ldl -lrt -lm
@@ -23,7 +26,7 @@ OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(RAYLIB_LIBS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(RAYLIB_LIBS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
