@@ -41,7 +41,7 @@ make clean
 make
 ```
 
-## ▶ 4. Executando o jogo
+### ▶ 3. Executando o jogo
 Se a compilação for bem-sucedida, execute o jogo com:
 ```bash
 ./campo_minado
