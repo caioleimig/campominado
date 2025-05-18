@@ -1,27 +1,18 @@
 # 🧨 Campo Minado em C com Raylib
-Este projeto é uma implementação do clássico **Campo Minado**, desenvolvido em **C** utilizando a biblioteca gráfica **[Raylib](https://www.raylib.com/)**.
 
-# Requisitos
-- macOS  
-- Homebrew  
-- Compilador GCC ou Clang  
-- Biblioteca Raylib  
+Este projeto é uma implementação do jogo **Campo Minado**, desenvolvido em **C** utilizando a biblioteca gráfica **[Raylib](https://www.raylib.com/)**.
 
----
+## ⚙️ Requisitos
 
-## Instalando dependências no macOS
+- macOS
+- [Homebrew](https://brew.sh/)
+- Compilador GCC ou Clang
+- Biblioteca Raylib
 
-### 1. Instalar o Homebrew (caso ainda não tenha)
+## 📦 Instalando dependências no macOS
 
-Abra o terminal e execute:
+1. **Instale o Homebrew (caso ainda não tenha):**
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
----
-
-### 2. Instalar o Raylib
-
-Abra o terminal e execute:
-```bash
-brew install raylib
+   Abra o terminal e execute:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
