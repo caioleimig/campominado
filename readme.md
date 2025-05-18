@@ -19,6 +19,7 @@ Abra o terminal e execute:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ---
+
 ### 2. Instalar o Raylib
 
 Abra o terminal e execute:
