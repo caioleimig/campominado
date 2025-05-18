@@ -35,14 +35,12 @@ Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo 
 ```bash
 cd/campominado
 ```
-### 2. use o make clean
+### 2. Use os comandos na ordem:
 ```bash
 make clean
+make
 ```
-### 3. use o make 
-```bash
-make 
-```
+
 ## ▶ 4. Executando o jogo
 Se a compilação for bem-sucedida, execute o jogo com:
 ```bash
@@ -84,7 +82,7 @@ Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo 
 1. **Navegue até a raiz do projeto (onde está a pasta src/):**
 
    ```bash
-   cd /caminho/para/o/projeto
+   cd /campominado
    ```
 
 2. **Compile com o comando:**
@@ -104,4 +102,3 @@ Se a compilação for bem-sucedida, execute o jogo com:
 ```
 
 Divirta-se jogando Campo Minado!
-
