@@ -44,12 +44,6 @@ Se a compilação for bem-sucedida, execute o jogo com:
 ![image](https://github.com/user-attachments/assets/466ad94e-5917-40fc-979d-d8ff13aa8e3f)
 
 
-🚩 **Campo Minado em C com Raylib**
-
-Este projeto é uma implementação do clássico Campo Minado, desenvolvido em C utilizando a biblioteca gráfica Raylib.
-
----
-
 ## 🛠️ Requisitos Linux
 
 * Linux Ubuntu
