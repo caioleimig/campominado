@@ -22,7 +22,9 @@ Abra o terminal e execute:
 
 ### 2. Verificar se o Raylib foi instalado corretamente
 Abra o terminal e execute:
+
 ![image](https://github.com/user-attachments/assets/205f656d-f192-464f-b8a0-2aefaf67c3b2)
+
 ---
 
 ## 🛠️ Compilando o projeto
@@ -31,9 +33,12 @@ Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo 
 ![image](https://github.com/user-attachments/assets/4efa8f0a-7e96-4bcc-a5d8-06ffb08759b8)
 
 ### 2. Compile com o comando:
+
 ![image](https://github.com/user-attachments/assets/ffa55fcb-af8b-4638-93ff-6e4c1a374ecf)
+
 ---
 
 ## ▶️ Executando o jogo
 Se a compilação for bem-sucedida, execute o jogo com:
+
 ![image](https://github.com/user-attachments/assets/466ad94e-5917-40fc-979d-d8ff13aa8e3f)
