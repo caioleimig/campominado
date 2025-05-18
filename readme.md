@@ -18,7 +18,7 @@ Este projeto é uma implementação do clássico **Campo Minado**, desenvolvido 
 ### 1. Instalar o Homebrew (caso ainda não tenha)
 Abra o terminal e execute:
 
----
+
 
 ### 2. Verificar se o Raylib foi instalado corretamente
 Abra o terminal e execute:
