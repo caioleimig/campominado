@@ -1,8 +1,14 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -Iinclude
 
-# Flags manuais para macOS - linkando raylib e frameworks necessários
-RAYLIB_LIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
+# Verificação do sistema operacional
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)  # macOS
+    RAYLIB_LIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
+else  # Linux
+    RAYLIB_LIBS = -lraylib -lGL -lpthread -ldl -lrt -lm
+endif
 
 TARGET = campo_minado
 SRCDIR = src

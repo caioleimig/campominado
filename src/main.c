@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "../include/game.h"
+#include "game.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
