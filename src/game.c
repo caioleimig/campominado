@@ -9,15 +9,12 @@ Board* CreateBoard(int gridSize, int numMines) {
     board->numMines = numMines;
     board->gameOver = false;
 
-    // Aloca matriz de células
     board->cells = (Cell **)malloc(gridSize * sizeof(Cell *));
     for (int i = 0; i < gridSize; i++) {
         board->cells[i] = (Cell *)calloc(gridSize, sizeof(Cell));
     }
 
-    // Inicializa lista de minas vazia
     board->mines.head = NULL;
-
     return board;
 }
 
@@ -72,45 +69,73 @@ void InitGame(Board *board) {
     CalculateAdjacentMines(board);
 }
 
-void UpdateGame(Board *board) {
+void RevealAllMines(Board *board) {
+    for (int y = 0; y < board->gridSize; y++) {
+        for (int x = 0; x < board->gridSize; x++) {
+            if (board->cells[y][x].hasMine) {
+                board->cells[y][x].revealed = true;
+            }
+        }
+    }
+}
+
+void UpdateGame(Board *board, int screenWidth, int screenHeight) {
+    if (board->gameOver) return;
+
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         Vector2 mousePos = GetMousePosition();
-        int cellSize = 20;
-        int x = (int)(mousePos.x - 10) / cellSize;
-        int y = (int)(mousePos.y - 40) / cellSize;
+
+        int maxCellSize = 50;
+        int cellSize = screenWidth / board->gridSize;
+        if (cellSize > maxCellSize) cellSize = maxCellSize;
+
+        int offsetX = (screenWidth - (cellSize * board->gridSize)) / 2;
+        int offsetY = (screenHeight - (cellSize * board->gridSize)) / 2;
+
+        int x = (int)(mousePos.x - offsetX) / cellSize;
+        int y = (int)(mousePos.y - offsetY) / cellSize;
 
         if (x >= 0 && x < board->gridSize && y >= 0 && y < board->gridSize) {
             board->cells[y][x].revealed = true;
 
             if (board->cells[y][x].hasMine) {
                 board->gameOver = true;
+                RevealAllMines(board);
             }
         }
     }
 }
 
-void DrawGame(Board *board) {
+void DrawGame(Board *board, int screenWidth, int screenHeight) {
     DrawText("Campo Minado", 10, 10, 20, DARKGRAY);
+    if (board->gameOver) {
+        DrawText("Você perdeu! Pressione R para reiniciar", 10, 40, 20, RED);
+    }
 
-    int cellSize = 20;
+    int maxCellSize = 50;
+    int cellSize = screenWidth / board->gridSize;
+    if (cellSize > maxCellSize) cellSize = maxCellSize;
+
+    int offsetX = (screenWidth - (cellSize * board->gridSize)) / 2;
+    int offsetY = (screenHeight - (cellSize * board->gridSize)) / 2;
+
     for (int y = 0; y < board->gridSize; y++) {
         for (int x = 0; x < board->gridSize; x++) {
-            Rectangle cellRect = { x * cellSize + 10, y * cellSize + 40, cellSize - 2, cellSize - 2 };
+            Rectangle cellRect = { offsetX + x * cellSize, offsetY + y * cellSize, cellSize - 2, cellSize - 2 };
             Color color = board->cells[y][x].revealed ? LIGHTGRAY : DARKGRAY;
             DrawRectangleRec(cellRect, color);
 
             if (board->cells[y][x].flagged) {
-                DrawText("F", cellRect.x + 5, cellRect.y + 2, 16, RED);
+                DrawText("F", cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, RED);
             } else if (board->cells[y][x].revealed && board->cells[y][x].hasMine) {
-                DrawText("*", cellRect.x + 5, cellRect.y + 2, 16, BLACK);
+                DrawText("*", cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, BLACK);
             } else if (board->cells[y][x].revealed && board->cells[y][x].adjacentMines > 0) {
-                DrawText(TextFormat("%d", board->cells[y][x].adjacentMines), cellRect.x + 5, cellRect.y + 2, 16, BLUE);
+                DrawText(TextFormat("%d", board->cells[y][x].adjacentMines), cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, BLUE);
             }
         }
     }
 }
 
-// Função para adicionar uma mina na lista encadeada
 void AddMine(MineList *list, int x, int y) {
     MineNode *newNode = malloc(sizeof(MineNode));
     newNode->x = x;
@@ -119,7 +144,6 @@ void AddMine(MineList *list, int x, int y) {
     list->head = newNode;
 }
 
-// Função para liberar a lista de minas
 void FreeMineList(MineList *list) {
     MineNode *current = list->head;
     while (current) {
@@ -130,7 +154,6 @@ void FreeMineList(MineList *list) {
     list->head = NULL;
 }
 
-// Função para destruir o tabuleiro e liberar memória
 void DestroyBoard(Board *board) {
     for (int i = 0; i < board->gridSize; i++) {
         free(board->cells[i]);
@@ -139,5 +162,3 @@ void DestroyBoard(Board *board) {
     FreeMineList(&board->mines);
     free(board);
 }
-
-

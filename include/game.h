@@ -34,16 +34,12 @@ void DestroyBoard(Board *board);
 void InitGame(Board *board);
 
 // Game logic
-void UpdateGame(Board *board);
-void DrawGame(Board *board);
-bool IsGameOver(Board *board);
+void UpdateGame(Board *board, int screenWidth, int screenHeight);
+void DrawGame(Board *board, int screenWidth, int screenHeight);
+void RevealAllMines(Board *board); // <- nova função
 
 // MineList management
 void AddMine(MineList *list, int x, int y);
 void FreeMineList(MineList *list);
-
-// Saving and loading (se implementado)
-void SaveBoard(Board *board, const char *filename);
-Board* LoadBoard(const char *filename);
 
 #endif // GAME_H

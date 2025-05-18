@@ -1,8 +1,8 @@
 #include "raylib.h"
 #include "game.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 700
+#define SCREEN_HEIGHT 700
 
 int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Campo Minado");
@@ -16,12 +16,16 @@ int main(void) {
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        UpdateGame(board);
+        UpdateGame(board, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        if (board->gameOver && IsKeyPressed(KEY_R)) {
+            InitGame(board);
+        }
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawGame(board);
+        DrawGame(board, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         EndDrawing();
     }
