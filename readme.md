@@ -33,7 +33,7 @@ brew install raylib
 Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo da seguinte forma:
 ### 1. Navegue até a raiz do projeto:
 ```bash
-cd/caminho/para/o/projeto
+cd/campominado
 ```
 ### 2. use o make clean
 ```bash
