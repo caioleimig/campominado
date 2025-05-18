@@ -5,7 +5,7 @@ Campo Minado é uma implementação simples e interativa do clássico jogo Mines
 ---
 
 ## ⚙️ Requisitos macOS
-**[Raylib](https://www.raylib.com/)**.
+
 - macOS  
 - [Homebrew](https://brew.sh/)  
 - Compilador **GCC** ou **Clang**  
