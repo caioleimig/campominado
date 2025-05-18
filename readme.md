@@ -17,22 +17,23 @@ Este projeto é uma implementação do clássico **Campo Minado**, desenvolvido 
 
 ### 1. Instalar o Homebrew (caso ainda não tenha)
 Abra o terminal e execute:
-
+![image](https://github.com/user-attachments/assets/de8bf39d-9bcb-4f50-8170-bd5c0b53e669)
 
 
 ### 2. Verificar se o Raylib foi instalado corretamente
 Abra o terminal e execute:
-
+![image](https://github.com/user-attachments/assets/205f656d-f192-464f-b8a0-2aefaf67c3b2)
 ---
 
 ## 🛠️ Compilando o projeto
 Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo da seguinte forma:
-
 ### 1. Navegue até a raiz do projeto (onde está a pasta src/):
+![image](https://github.com/user-attachments/assets/4efa8f0a-7e96-4bcc-a5d8-06ffb08759b8)
 
 ### 2. Compile com o comando:
-
+![image](https://github.com/user-attachments/assets/ffa55fcb-af8b-4638-93ff-6e4c1a374ecf)
 ---
 
 ## ▶️ Executando o jogo
 Se a compilação for bem-sucedida, execute o jogo com:
+![image](https://github.com/user-attachments/assets/466ad94e-5917-40fc-979d-d8ff13aa8e3f)
