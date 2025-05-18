@@ -1,11 +1,11 @@
 # 🧨 Campo Minado em C com Raylib
 
-Este projeto é uma implementação do clássico **Campo Minado**, desenvolvido em **C** utilizando a biblioteca gráfica **[Raylib](https://www.raylib.com/)**.
+Campo Minado é uma implementação simples e interativa do clássico jogo Minesweeper, desenvolvida em linguagem C com a biblioteca gráfica **[Raylib](https://www.raylib.com/)**. O projeto foi pensado para rodar tanto no macOS quanto no Linux, sem depender de frameworks externos.
 
 ---
 
 ## ⚙️ Requisitos macOS
-
+**[Raylib](https://www.raylib.com/)**.
 - macOS  
 - [Homebrew](https://brew.sh/)  
 - Compilador **GCC** ou **Clang**  
