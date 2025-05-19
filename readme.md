@@ -4,7 +4,7 @@ Campo Minado é uma implementação simples e interativa do clássico jogo Mines
 
 ---
 
-## ⚙️ Requisitos macOS
+## 💻 Requisitos macOS
 
 - macOS  
 - [Homebrew](https://brew.sh/)  
@@ -48,7 +48,7 @@ Se a compilação for bem-sucedida, execute o jogo com:
 ```
 ---
 
-## 🛠️ Requisitos Linux
+## 💻 Requisitos Linux
 
 * Linux Ubuntu
 * Compilador GCC
