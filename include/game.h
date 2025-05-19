@@ -1,45 +1,41 @@
 #ifndef GAME_H
 #define GAME_H
-
 #include "raylib.h"
 #include <stdbool.h>
 
 typedef struct {
-    bool revealed;
-    bool hasMine;
-    bool flagged;
-    int adjacentMines;
-} Cell;
+    bool revelada;
+    bool temMina;
+    bool marcada;
+    int minasAdjacentes;
+} Celula;
 
-typedef struct MineNode {
+typedef struct NoMina {
     int x, y;
-    struct MineNode *next;
-} MineNode;
+    struct NoMina *proximo;
+} NoMina;
 
 typedef struct {
-    MineNode *head;
-} MineList;
+    NoMina *cabeca;
+} ListaMinas;
 
 typedef struct {
-    int gridSize;
-    int numMines;
-    Cell **cells;
-    MineList mines;
-    bool gameOver;
-} Board;
+    int tamanhoGrade;
+    int numeroMinas;
+    Celula **celulas;
+    ListaMinas minas;
+    bool fimDeJogo;
+} Tabuleiro;
 
-// Board management
-Board* CreateBoard(int gridSize, int numMines);
-void DestroyBoard(Board *board);
-void InitGame(Board *board);
+Tabuleiro* CriarTabuleiro(int tamanhoGrade, int numeroMinas);
+void DestruirTabuleiro(Tabuleiro *tabuleiro);
+void InicializarJogo(Tabuleiro *tabuleiro);
 
-// Game logic
-void UpdateGame(Board *board, int screenWidth, int screenHeight);
-void DrawGame(Board *board, int screenWidth, int screenHeight);
-void RevealAllMines(Board *board); // <- nova função
+void AtualizarJogo(Tabuleiro *tabuleiro, int larguraTela, int alturaTela);
+void DesenharJogo(Tabuleiro *tabuleiro, int larguraTela, int alturaTela);
+void RevelarTodasMinas(Tabuleiro *tabuleiro); 
 
-// MineList management
-void AddMine(MineList *list, int x, int y);
-void FreeMineList(MineList *list);
+void AdicionarMina(ListaMinas *lista, int x, int y);
+void LiberarListaMinas(ListaMinas *lista);
 
-#endif // GAME_H
+#endif 

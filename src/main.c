@@ -1,36 +1,35 @@
 #include "raylib.h"
 #include "game.h"
-
-#define SCREEN_WIDTH 700
-#define SCREEN_HEIGHT 700
+#define LARGURA_TELA 700
+#define ALTURA_TELA 700
 
 int main(void) {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Campo Minado");
+    InitWindow(LARGURA_TELA, ALTURA_TELA, "Campo Minado");
 
-    int gridSize = 10;
-    int numMines = 10;
+    int tamanhoGrade = 10;
+    int numeroMinas = 10;
 
-    Board *board = CreateBoard(gridSize, numMines);
-    InitGame(board);
+    Tabuleiro *tabuleiro = CriarTabuleiro(tamanhoGrade, numeroMinas);
+    InicializarJogo(tabuleiro);
 
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        UpdateGame(board, SCREEN_WIDTH, SCREEN_HEIGHT);
+        AtualizarJogo(tabuleiro, LARGURA_TELA, ALTURA_TELA);
 
-        if (board->gameOver && IsKeyPressed(KEY_R)) {
-            InitGame(board);
+        if (tabuleiro->fimDeJogo && IsKeyPressed(KEY_R)) {
+            InicializarJogo(tabuleiro);
         }
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawGame(board, SCREEN_WIDTH, SCREEN_HEIGHT);
+        DesenharJogo(tabuleiro, LARGURA_TELA, ALTURA_TELA);
 
         EndDrawing();
     }
 
-    DestroyBoard(board);
+    DestruirTabuleiro(tabuleiro);
     CloseWindow();
 
     return 0;

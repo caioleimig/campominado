@@ -3,162 +3,174 @@
 #include <stdlib.h>
 #include <time.h>
 
-Board* CreateBoard(int gridSize, int numMines) {
-    Board *board = (Board *)malloc(sizeof(Board));
-    board->gridSize = gridSize;
-    board->numMines = numMines;
-    board->gameOver = false;
+Tabuleiro* CriarTabuleiro(int tamanhoGrade, int numeroMinas) {
+    Tabuleiro *tabuleiro = (Tabuleiro *)malloc(sizeof(Tabuleiro));
+    tabuleiro->tamanhoGrade = tamanhoGrade;
+    tabuleiro->numeroMinas = numeroMinas;
+    tabuleiro->fimDeJogo = false;
 
-    board->cells = (Cell **)malloc(gridSize * sizeof(Cell *));
-    for (int i = 0; i < gridSize; i++) {
-        board->cells[i] = (Cell *)calloc(gridSize, sizeof(Cell));
+    tabuleiro->celulas = (Celula **)malloc(tamanhoGrade * sizeof(Celula *));
+    for (int i = 0; i < tamanhoGrade; i++) {
+        tabuleiro->celulas[i] = (Celula *)calloc(tamanhoGrade, sizeof(Celula));
     }
 
-    board->mines.head = NULL;
-    return board;
+    tabuleiro->minas.cabeca = NULL;
+    return tabuleiro;
 }
 
-void PlaceMines(Board *board) {
+void PosicionarMinas(Tabuleiro *tabuleiro) {
     srand(time(NULL));
-    int placedMines = 0;
-    while (placedMines < board->numMines) {
-        int x = rand() % board->gridSize;
-        int y = rand() % board->gridSize;
+    int minasColocadas = 0;
+    while (minasColocadas < tabuleiro->numeroMinas) {
+        int x = rand() % tabuleiro->tamanhoGrade;
+        int y = rand() % tabuleiro->tamanhoGrade;
 
-        if (!board->cells[y][x].hasMine) {
-            board->cells[y][x].hasMine = true;
-            AddMine(&board->mines, x, y);
-            placedMines++;
+        if (tabuleiro->celulas[y][x].temMina == false) {
+            tabuleiro->celulas[y][x].temMina = true;
+            AdicionarMina(&tabuleiro->minas, x, y);
+            minasColocadas++;
         }
     }
 }
 
-void CalculateAdjacentMines(Board *board) {
+void Adjacentes(Tabuleiro *tabuleiro) {
     int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
     int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-    for (int y = 0; y < board->gridSize; y++) {
-        for (int x = 0; x < board->gridSize; x++) {
-            if (board->cells[y][x].hasMine) continue;
-
-            int count = 0;
+    for (int y = 0; y < tabuleiro->tamanhoGrade; y++) {
+        for (int x = 0; x < tabuleiro->tamanhoGrade; x++) {
+            if (tabuleiro->celulas[y][x].temMina){
+                continue;
+            }
+            int contagem = 0;
             for (int i = 0; i < 8; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                if (nx >= 0 && nx < board->gridSize && ny >= 0 && ny < board->gridSize && board->cells[ny][nx].hasMine) {
-                    count++;
+                if (nx >= 0 && nx < tabuleiro->tamanhoGrade &&
+                    ny >= 0 && ny < tabuleiro->tamanhoGrade && 
+                    tabuleiro->celulas[ny][nx].temMina) {
+                    contagem++;
                 }
             }
-            board->cells[y][x].adjacentMines = count;
+            tabuleiro->celulas[y][x].minasAdjacentes = contagem;
         }
     }
 }
 
-void InitGame(Board *board) {
-    for (int i = 0; i < board->gridSize; i++) {
-        for (int j = 0; j < board->gridSize; j++) {
-            board->cells[i][j].revealed = false;
-            board->cells[i][j].hasMine = false;
-            board->cells[i][j].flagged = false;
-            board->cells[i][j].adjacentMines = 0;
+void InicializarJogo(Tabuleiro *tabuleiro) {
+    for (int i = 0; i < tabuleiro->tamanhoGrade; i++) {
+        for (int j = 0; j < tabuleiro->tamanhoGrade; j++) {
+            tabuleiro->celulas[i][j].revelada = false;
+            tabuleiro->celulas[i][j].temMina = false;
+            tabuleiro->celulas[i][j].marcada = false;
+            tabuleiro->celulas[i][j].minasAdjacentes = 0;
         }
     }
-    board->gameOver = false;
+    tabuleiro->fimDeJogo = false;
 
-    PlaceMines(board);
-    CalculateAdjacentMines(board);
+    PosicionarMinas(tabuleiro);
+    Adjacentes(tabuleiro);
 }
 
-void RevealAllMines(Board *board) {
-    for (int y = 0; y < board->gridSize; y++) {
-        for (int x = 0; x < board->gridSize; x++) {
-            if (board->cells[y][x].hasMine) {
-                board->cells[y][x].revealed = true;
+void RevelarTodasMinas(Tabuleiro *tabuleiro) {
+    for (int y = 0; y < tabuleiro->tamanhoGrade; y++) {
+        for (int x = 0; x < tabuleiro->tamanhoGrade; x++){
+            if (tabuleiro->celulas[y][x].temMina) {
+                tabuleiro->celulas[y][x].revelada = true;
             }
         }
     }
 }
 
-void UpdateGame(Board *board, int screenWidth, int screenHeight) {
-    if (board->gameOver) return;
-
+void AtualizarJogo(Tabuleiro *tabuleiro, int larguraTela, int alturaTela) {
+    if (tabuleiro->fimDeJogo) {
+    return;
+}
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        Vector2 mousePos = GetMousePosition();
+        Vector2 posMouse = GetMousePosition();
 
-        int maxCellSize = 50;
-        int cellSize = screenWidth / board->gridSize;
-        if (cellSize > maxCellSize) cellSize = maxCellSize;
+        int tamanhoMaxCelula = 50;
+        int tamanhoCelula = larguraTela / tabuleiro->tamanhoGrade;
+    
 
-        int offsetX = (screenWidth - (cellSize * board->gridSize)) / 2;
-        int offsetY = (screenHeight - (cellSize * board->gridSize)) / 2;
+        int deslocX = (larguraTela - (tamanhoCelula * tabuleiro->tamanhoGrade)) / 2;
+        int deslocY = (alturaTela - (tamanhoCelula * tabuleiro->tamanhoGrade)) / 2;
 
-        int x = (int)(mousePos.x - offsetX) / cellSize;
-        int y = (int)(mousePos.y - offsetY) / cellSize;
+        int x = (int)(posMouse.x - deslocX) / tamanhoCelula;
+        int y = (int)(posMouse.y - deslocY) / tamanhoCelula;
 
-        if (x >= 0 && x < board->gridSize && y >= 0 && y < board->gridSize) {
-            board->cells[y][x].revealed = true;
+        if (x >= 0 && x < tabuleiro->tamanhoGrade && y >= 0 && y < tabuleiro->tamanhoGrade) {
+            tabuleiro->celulas[y][x].revelada = true;
 
-            if (board->cells[y][x].hasMine) {
-                board->gameOver = true;
-                RevealAllMines(board);
+            if (tabuleiro->celulas[y][x].temMina) {
+                tabuleiro->fimDeJogo = true;
+                RevelarTodasMinas(tabuleiro);
             }
         }
     }
 }
 
-void DrawGame(Board *board, int screenWidth, int screenHeight) {
+void DesenharJogo(Tabuleiro *tabuleiro, int largura, int altura) {
     DrawText("Campo Minado", 10, 10, 20, DARKGRAY);
-    if (board->gameOver) {
-        DrawText("Você perdeu! Pressione R para reiniciar", 10, 40, 20, RED);
+
+    if (tabuleiro->fimDeJogo) {
+        DrawText("GAME OVER!!! (Pressione R para reiniciar)", 10, 40, 20, RED);
     }
 
-    int maxCellSize = 50;
-    int cellSize = screenWidth / board->gridSize;
-    if (cellSize > maxCellSize) cellSize = maxCellSize;
+    int tamanho = largura / tabuleiro->tamanhoGrade;
+    if (tamanho > 50) tamanho = 50;
 
-    int offsetX = (screenWidth - (cellSize * board->gridSize)) / 2;
-    int offsetY = (screenHeight - (cellSize * board->gridSize)) / 2;
+    for (int y = 0; y < tabuleiro->tamanhoGrade; y++) {
+    for (int x = 0; x < tabuleiro->tamanhoGrade; x++) {
+        int posX = x * tamanho + (largura - (tamanho * tabuleiro->tamanhoGrade)) / 2;
+        int posY = y * tamanho + (altura - (tamanho * tabuleiro->tamanhoGrade)) / 2;
 
-    for (int y = 0; y < board->gridSize; y++) {
-        for (int x = 0; x < board->gridSize; x++) {
-            Rectangle cellRect = { offsetX + x * cellSize, offsetY + y * cellSize, cellSize - 2, cellSize - 2 };
-            Color color = board->cells[y][x].revealed ? LIGHTGRAY : DARKGRAY;
-            DrawRectangleRec(cellRect, color);
+        Color cor;
+        if (tabuleiro->celulas[y][x].revelada) {
+            cor = LIGHTGRAY;
+        } else {
+            cor = DARKGRAY;
+        }
+        DrawRectangle(posX, posY, tamanho - 2, tamanho - 2, cor);
 
-            if (board->cells[y][x].flagged) {
-                DrawText("F", cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, RED);
-            } else if (board->cells[y][x].revealed && board->cells[y][x].hasMine) {
-                DrawText("*", cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, BLACK);
-            } else if (board->cells[y][x].revealed && board->cells[y][x].adjacentMines > 0) {
-                DrawText(TextFormat("%d", board->cells[y][x].adjacentMines), cellRect.x + cellSize / 4, cellRect.y + cellSize / 6, 16, BLUE);
+        if (tabuleiro->celulas[y][x].marcada) {
+            DrawText("F", posX + 5, posY + 5, 16, RED);
+        } 
+        else if (tabuleiro->celulas[y][x].revelada) {
+            if (tabuleiro->celulas[y][x].temMina) {
+                DrawText("*", posX + 5, posY + 5, 16, BLACK);
+            } 
+            else if (tabuleiro->celulas[y][x].minasAdjacentes > 0) {
+                DrawText(TextFormat("%d", tabuleiro->celulas[y][x].minasAdjacentes), posX + 5, posY + 5, 16, BLUE);
             }
         }
     }
+}    
 }
 
-void AddMine(MineList *list, int x, int y) {
-    MineNode *newNode = malloc(sizeof(MineNode));
-    newNode->x = x;
-    newNode->y = y;
-    newNode->next = list->head;
-    list->head = newNode;
+void AdicionarMina(ListaMinas *lista, int x, int y) {
+    NoMina *novo = malloc(sizeof(NoMina));
+    novo->x = x;
+    novo->y = y;
+    novo->proximo = lista->cabeca;
+    lista->cabeca = novo;
 }
 
-void FreeMineList(MineList *list) {
-    MineNode *current = list->head;
-    while (current) {
-        MineNode *tmp = current;
-        current = current->next;
-        free(tmp);
+void LiberarListaMinas(ListaMinas *lista) {
+    NoMina *atual = lista->cabeca;
+    while (atual) {
+        NoMina *novo = atual;
+        atual = atual->proximo;
+        free(novo);
     }
-    list->head = NULL;
+    lista->cabeca = NULL;
 }
 
-void DestroyBoard(Board *board) {
-    for (int i = 0; i < board->gridSize; i++) {
-        free(board->cells[i]);
+void DestruirTabuleiro(Tabuleiro *tabuleiro) {
+    for (int i = 0; i < tabuleiro->tamanhoGrade; i++) {
+        free(tabuleiro->celulas[i]);
     }
-    free(board->cells);
-    FreeMineList(&board->mines);
-    free(board);
+    free(tabuleiro->celulas);
+    LiberarListaMinas(&tabuleiro->minas);
+    free(tabuleiro);
 }
