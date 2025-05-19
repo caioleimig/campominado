@@ -56,7 +56,7 @@ Se a compilação for bem-sucedida, execute o jogo com:
 
 ---
 
-### 📝 Instalando dependências no Ubuntu
+### 📝 Instalando dependências no Linux (Ubuntu)
 
 1. **Atualize o sistema e instale o GCC:**
    Abra o terminal e execute:
