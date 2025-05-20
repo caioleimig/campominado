@@ -105,7 +105,7 @@ Divirta-se jogando Campo Minado!
 
 ---
 
-## Colaboradores
+## Colaboradore:
 
 [Guilherme Burle Medeiros](https://www.linkedin.com/in/guilherme-burle/)
 
