@@ -91,7 +91,9 @@ void AtualizarJogo(Tabuleiro *tabuleiro, int larguraTela, int alturaTela) {
 
         int tamanhoMaxCelula = 50;
         int tamanhoCelula = larguraTela / tabuleiro->tamanhoGrade;
-    
+        if (tamanhoCelula > tamanhoMaxCelula) {
+        tamanhoCelula = tamanhoMaxCelula;
+        }       
 
         int deslocX = (larguraTela - (tamanhoCelula * tabuleiro->tamanhoGrade)) / 2;
         int deslocY = (alturaTela - (tamanhoCelula * tabuleiro->tamanhoGrade)) / 2;
