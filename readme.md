@@ -108,5 +108,7 @@ Divirta-se jogando Campo Minado!
 ## Colaboradores
 
 [Guilherme Burle Medeiros](https://www.linkedin.com/in/guilherme-burle/)
+
 [Yan Ribeiro Nunes](https://www.linkedin.com/in/yan-ribeiro-nunes/)
+
 [Caio Leimig Rodrigues da Silva](https://www.linkedin.com/in/caio-leimig-rodrigues-da-silva/)
