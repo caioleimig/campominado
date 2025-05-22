@@ -116,4 +116,4 @@ Divirta-se jogando Campo Minado!
 
 [Caio Leimig Rodrigues da Silva](https://www.linkedin.com/in/caio-leimig-rodrigues-da-silva/)
 
-
+[Guilherme Burle Medeiros](https://www.linkedin.com/in/guilherme-burle/)
