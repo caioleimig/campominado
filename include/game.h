@@ -37,5 +37,4 @@ void RevelarTodasMinas(Tabuleiro *tabuleiro);
 
 void AdicionarMina(ListaMinas *lista, int x, int y);
 void LiberarListaMinas(ListaMinas *lista);
-
 #endif 

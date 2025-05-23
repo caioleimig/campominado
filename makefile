@@ -2,7 +2,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -Iinclude
 LDFLAGS =
 
-# Verificação do sistema operacional
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)  # macOS
