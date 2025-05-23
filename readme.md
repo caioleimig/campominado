@@ -4,7 +4,7 @@ Campo Minado é uma implementação simples e interativa do clássico jogo Mines
 
 ---
 
-## 🎮 Explicação do Jogo
+## 🎮 Screencast do Jogo
 Aqui se encontrará o screencast mostrando o funcionamento do jogo.
 
 🔗 [Screencast do Campo Minado](https://youtu.be/YDhvL2kSngw)
