@@ -55,7 +55,7 @@ Se a compilação for bem-sucedida, execute o jogo com:
 
 ## 💻 Requisitos Linux
 
-* Linux Ubuntu
+* Linux Ubuntu (Ou variantes Debian)
 * Compilador GCC
 * Biblioteca Raylib
 
