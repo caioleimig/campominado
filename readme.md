@@ -40,7 +40,7 @@ brew install raylib
 Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo da seguinte forma:
 ### 1. Navegue até a raiz do projeto:
 ```bash
-cd/campominado
+cd campominado
 ```
 ### 2. Use os comandos na ordem:
 ```bash
