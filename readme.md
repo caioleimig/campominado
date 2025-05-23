@@ -7,7 +7,7 @@ Campo Minado é uma implementação simples e interativa do clássico jogo Mines
 ## 🎮 Explicação do Jogo
 Aqui se encontrará o screencast mostrando o funcionamento do jogo.
 
-🔗 [Screencasto Campo Minado](https://youtu.be/YDhvL2kSngw)
+🔗 [Screencast do Campo Minado](https://youtu.be/YDhvL2kSngw)
 
 ## 💻 Requisitos macOS
 
