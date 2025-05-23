@@ -87,7 +87,7 @@ Como o projeto está estruturado em múltiplos arquivos, você deve compilá-lo 
 1. **Navegue até a raiz do projeto (onde está a pasta src/):**
 
    ```bash
-   cd /campominado
+   cd campominado
    ```
 
 2. **Compile com o comando:**
